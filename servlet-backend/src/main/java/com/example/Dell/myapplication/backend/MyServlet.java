@@ -1,9 +1,3 @@
-/*
-   For step-by-step instructions on connecting your Android application to this backend module,
-   see "App Engine Java Servlet Module" template documentation at
-   https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloWorld
-*/
-
 package com.example.Dell.myapplication.backend;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -56,13 +50,13 @@ public class MyServlet extends HttpServlet {
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/drive-java-quickstart.json
      */
-   private static final List<String> SCOPES =
+    private static final List<String> SCOPES =
             Arrays.asList(DriveScopes.DRIVE_METADATA_READONLY);
 
     static {
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-  //          DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+            //          DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
@@ -100,7 +94,6 @@ public class MyServlet extends HttpServlet {
                 DriveQuickstart.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
@@ -112,19 +105,16 @@ public class MyServlet extends HttpServlet {
                 flow, new LocalServerReceiver()).authorize("user");
      */// setServiceAccountId(IRingeeConstants.SERVICE_ACCOUNT_EMAIL)
         URL resource = getServletContext().getResource("/WEB-INF/Google cloud app-7e0287a68575.p12");
-       // URL resource = getServletContext().getResource("/WEB-INF/rups.txt");
+        // URL resource = getServletContext().getResource("/WEB-INF/rups.txt");
         java.io.File file=null;
         try {
-             file =  new java.io.File(resource.toURI());
+            file =  new java.io.File(resource.toURI());
         /*    try (BufferedReader br = new BufferedReader(new FileReader(file)))
             {
-
                 String sCurrentLine;
-
                 while ((sCurrentLine = br.readLine()) != null) {
                     System.out.println(sCurrentLine);
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -148,17 +138,17 @@ public class MyServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-      //  System.out.println(                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+        //  System.out.println(                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
     public  Drive getDriveService() throws IOException {
         Credential credential = authorize();
         return new Drive.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
-             //   .setApplicationName(APPLICATION_NAME)
+                //   .setApplicationName(APPLICATION_NAME)
                 .build();
     }
- void printFile(Drive service){
+    void printFile(Drive service){
         // Print the names and IDs for up to 10 files.
         FileList result = null;
         try {
@@ -187,7 +177,6 @@ public class MyServlet extends HttpServlet {
     body.setMimeType("application/vnd.google-apps.folder");
     java.io.File fileContent = new java.io.File("G:\\document.txt");
     FileContent mediaContent = new FileContent("text/plain", fileContent);
-
     File file = service.files().insert(body, mediaContent).execute();
     System.out.print("file id is :" + file.getId());
     Permission newPermission = new Permission();
@@ -198,12 +187,10 @@ public class MyServlet extends HttpServlet {
     newPermission.setRole("writer");
     service.permissions().insert(file.getId(), newPermission).execute();
     getFileByFileId(service, file.getId());
-
     }*/
    /* void driveauthen() {
        HttpTransport httpTransport = new NetHttpTransport();
         JsonFactory jsonFactory = new JacksonFactory();
-
         try {
             GoogleCredential credential = new GoogleCredential.Builder().
                     setTransport(httpTransport).
@@ -216,7 +203,6 @@ public class MyServlet extends HttpServlet {
                     .setApplicationName(APPLICATION_NAME)
                     .build();
           //  Drive service = new Drive.Builder(httpTransport, jsonFactory, credential).setApplicationName(IRingeeConstants.APPLICATION_NAME).build();
-
             File body = new File();
             body.setTitle("ringee");
             body.setDescription("ringeeapp");
@@ -224,7 +210,6 @@ public class MyServlet extends HttpServlet {
             body.setMimeType("application/vnd.google-apps.folder");
             java.io.File fileContent = new java.io.File("G:\\document.txt");
             FileContent mediaContent = new FileContent("text/plain", fileContent);
-
             File file = service.files().insert(body, mediaContent).execute();
             System.out.print("file id is :" + file.getId());
             Permission newPermission = new Permission();
