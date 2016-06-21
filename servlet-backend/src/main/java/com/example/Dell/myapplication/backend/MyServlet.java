@@ -39,11 +39,10 @@ public class MyServlet extends HttpServlet {
             "Drive API Java Quickstart";
 
     /** Directory to store user credentials for this application. */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File(
-            System.getProperty("user.home"), ".credentials/drive-java-quickstart.json");
+//    private static final java.io.File DATA_STORE_DIR = new java.io.File(            System.getProperty("user.home"), ".credentials/drive-java-quickstart.json");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
+//    private static FileDataStoreFactory DATA_STORE_FACTORY;
 
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY =
@@ -57,13 +56,13 @@ public class MyServlet extends HttpServlet {
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/drive-java-quickstart.json
      */
-    private static final List<String> SCOPES =
+   private static final List<String> SCOPES =
             Arrays.asList(DriveScopes.DRIVE_METADATA_READONLY);
 
     static {
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+  //          DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
@@ -113,9 +112,24 @@ public class MyServlet extends HttpServlet {
                 flow, new LocalServerReceiver()).authorize("user");
      */// setServiceAccountId(IRingeeConstants.SERVICE_ACCOUNT_EMAIL)
         URL resource = getServletContext().getResource("/WEB-INF/Google cloud app-7e0287a68575.p12");
+       // URL resource = getServletContext().getResource("/WEB-INF/rups.txt");
         java.io.File file=null;
         try {
              file =  new java.io.File(resource.toURI());
+        /*    try (BufferedReader br = new BufferedReader(new FileReader(file)))
+            {
+
+                String sCurrentLine;
+
+                while ((sCurrentLine = br.readLine()) != null) {
+                    System.out.println(sCurrentLine);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+*/
+
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -127,22 +141,21 @@ public class MyServlet extends HttpServlet {
                     .setJsonFactory(JSON_FACTORY)
 
                     .setServiceAccountId("perfect-entry-134823@appspot.gserviceaccount.com")
-                    .setServiceAccountScopes(Collections.singleton(DriveScopes.DRIVE_APPDATA))
+                    .setServiceAccountScopes(Collections.singleton(DriveScopes.DRIVE))//DriveScopes.DRIVE_APPDATA
                     .setServiceAccountPrivateKeyFromP12File(file)
                     .build();
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         }
 
-        System.out.println(
-                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+      //  System.out.println(                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
     public  Drive getDriveService() throws IOException {
         Credential credential = authorize();
         return new Drive.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME)
+             //   .setApplicationName(APPLICATION_NAME)
                 .build();
     }
  void printFile(Drive service){
@@ -168,7 +181,7 @@ public class MyServlet extends HttpServlet {
     }
    /* void perm(Drive service) {
    File body = new File();
-    body.setTitle("ringee");
+  //  body.setTitle("ringee");
     body.setDescription("ringeeapp");
     body.setParents(Arrays.asList(new ParentReference().setId(parentId)));
     body.setMimeType("application/vnd.google-apps.folder");
